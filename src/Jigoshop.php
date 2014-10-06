@@ -79,7 +79,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop {
 	 * Jigoshop did some changes on how to retrieve options.
 	 *
 	 * @param string $key
-	 * @return boolean
+	 * @return boolean|string
 	 */
 	public static function get_option( $key ) {
 		$value = false;
