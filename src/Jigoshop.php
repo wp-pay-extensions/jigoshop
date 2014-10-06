@@ -91,7 +91,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop {
 				// @since Jigoshop v1.12
 				// @see https://github.com/jigoshop/jigoshop/blob/1.12/gateways/bank_transfer.php
 				$value = $options->get( $key );
-			} elseif( method_exists( $options, 'get_option' ) ) {
+			} elseif ( method_exists( $options, 'get_option' ) ) {
 				// @since Jigoshop v1.3
 				// @see https://github.com/jigoshop/jigoshop/blob/1.3/gateways/bank_transfer.php
 				$value = $options->get_option( $key );
