@@ -3,10 +3,12 @@
 /**
  * Title: Jigoshop iDEAL gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2015
+ * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
+ *
  * @author Remco Tolsma
  * @version 1.0.0
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_gateway {
 	/**
@@ -95,7 +97,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 			'choices' => array(
 				'no'  => __( 'No', 'pronamic_ideal' ),
 				'yes' => __( 'Yes', 'pronamic_ideal' ),
-			)
+			),
 		);
 
 		$defaults[] = array(
@@ -206,7 +208,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 					'key'   => $order->order_key,
 				),
 				get_permalink( jigoshop_get_page_id( 'pay' ) )
-			)
+			),
 		);
 	}
 
@@ -232,7 +234,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 			);
 		} else {
 			// We can't redirect directly to the action URL because of Jigoshop wp_safe_redirect() usage.
-			// $url = $payment->get_action_url();
 			$url = add_query_arg( 'payment_redirect', $payment->get_id(), home_url( '/' ) );
 
 			return array(
