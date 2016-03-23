@@ -12,12 +12,16 @@ module.exports = function( grunt ) {
 		// PHP Code Sniffer
 		phpcs: {
 			application: {
-				dir: [ 'src' ],
+				src: [
+					'**/*.php',
+					'!node_modules/**',
+					'!vendor/**',
+					'!wp-content/**'
+				]
 			},
 			options: {
 				standard: 'phpcs.ruleset.xml',
-				extensions: 'php',
-				ignore: 'node_modules'
+				showSniffCodes: true
 			}
 		},
 
@@ -56,5 +60,5 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-phpunit' );
 
 	// Default task(s).
-	grunt.registerTask( 'default', [ 'jshint', 'phplint', 'phpmd', 'phpcs', 'phpunit' ] );
+	grunt.registerTask( 'default', [ 'jshint', 'phplint', 'phpmd', 'phpcs' ] );
 };
