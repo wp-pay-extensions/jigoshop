@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## 1.0.3 - 2016-04-12
+- No longer use camelCase for payment data.
+
 ## 1.0.2 - 2016-03-23
 - Removed status code from redirect in update_status.
 
