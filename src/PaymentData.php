@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.0.3
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_PaymentData {
@@ -112,22 +112,22 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 		return $this->order->billing_email;
 	}
 
-	public function getCustomerName() {
+	public function get_customer_name() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
 		return $this->order->billing_first_name . ' ' . $this->order->billing_last_name;
 	}
 
-	public function getOwnerAddress() {
+	public function get_address() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L65
 		return $this->order->billing_address_1;
 	}
 
-	public function getOwnerCity() {
+	public function get_city() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L67
 		return $this->order->billing_city;
 	}
 
-	public function getOwnerZip() {
+	public function get_zip() {
 		// http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L68
 		return $this->order->billing_postcode;
 	}
