@@ -22,8 +22,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/jigoshop/compare/1.0.4...HEAD
-[1.0.4]: https://github.com/wp-pay-gateways/jigoshop/compare/1.0.3...1.0.4
-[1.0.3]: https://github.com/wp-pay-gateways/jigoshop/compare/1.0.2...1.0.3
-[1.0.2]: https://github.com/wp-pay-gateways/jigoshop/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/wp-pay-gateways/jigoshop/compare/1.0.0...1.0.1
+[unreleased]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.4...HEAD
+[1.0.4]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.3...1.0.4
+[1.0.3]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.0...1.0.1
