@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.0.4
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_gateway {
@@ -144,6 +144,10 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
 
 		if ( $gateway ) {
+			if ( $gateway->payment_method_is_required() && null === $gateway->get_payment_method() ) {
+				$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+			}
+
 			echo $gateway->get_input_html();
 		}
 	}
@@ -161,7 +165,13 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
 
 		if ( $gateway ) {
-			$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data );
+			if ( $gateway->payment_method_is_required() && null === $gateway->get_payment_method() ) {
+				$payment_method = Pronamic_WP_Pay_PaymentMethods::IDEAL;
+
+				$gateway->set_payment_method( $payment_method );
+			}
+
+			$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data, $payment_method );
 
 			echo $gateway->get_form_html( $payment );
 		}
