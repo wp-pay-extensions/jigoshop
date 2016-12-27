@@ -64,9 +64,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 
 		// Set own variables, load them form the WordPress options
 		$this->config_id      = Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_config_id' );
-
-		// Actions
-		add_action( 'receipt_' . self::ID, array( &$this, 'receipt_page' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -155,31 +152,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 	//////////////////////////////////////////////////
 
 	/**
-	 * Receipt page
-	 */
-	function receipt_page( $order_id ) {
-		$order = new jigoshop_order( $order_id );
-
-		$data = new Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData( $order );
-
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
-
-		if ( $gateway ) {
-			if ( $gateway->payment_method_is_required() && null === $gateway->get_payment_method() ) {
-				$payment_method = Pronamic_WP_Pay_PaymentMethods::IDEAL;
-
-				$gateway->set_payment_method( $payment_method );
-			}
-
-			$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data, $payment_method );
-
-			echo $gateway->get_form_html( $payment );
-		}
-	}
-
-	//////////////////////////////////////////////////
-
-	/**
 	 * Process the payment and return the result
 	 */
 	function process_payment( $order_id ) {
@@ -192,63 +164,30 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
 
 		if ( $gateway ) {
-			if ( $gateway->is_http_redirect() ) {
-				$return = $this->process_gateway_http_redirect( $order, $gateway );
-			}
+			$data = new Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData( $order );
 
-			if ( $gateway->is_html_form() ) {
-				$return = $this->process_gateway_html_form( $order );
-			}
+			$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data );
 
-			if ( ! $gateway->has_feedback() ) {
+			$error = $gateway->get_error();
 
-			}
-		}
+			if ( is_wp_error( $error ) ) {
+				jigoshop::add_error( Pronamic_WP_Pay_Plugin::get_default_error_message() );
 
-		return $return;
-	}
-
-	private function process_gateway_html_form( $order ) {
-		// Return pay page redirect
-		return array(
-			'result' 	=> 'success',
-			'redirect'	=> add_query_arg(
-				array(
-					'order' => $order->id,
-					'key'   => $order->order_key,
-				),
-				get_permalink( jigoshop_get_page_id( 'pay' ) )
-			),
-		);
-	}
-
-	private function process_gateway_http_redirect( $order, $gateway ) {
-		$data = new Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData( $order );
-
-		$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data );
-
-		$error = $gateway->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			jigoshop::add_error( Pronamic_WP_Pay_Plugin::get_default_error_message() );
-
-			if ( current_user_can( 'administrator' ) ) {
-				foreach ( $error->get_error_codes() as $code ) {
-					jigoshop::add_error( $error->get_error_message( $code ) );
+				if ( current_user_can( 'administrator' ) ) {
+					foreach ( $error->get_error_codes() as $code ) {
+						jigoshop::add_error( $error->get_error_message( $code ) );
+					}
 				}
-			}
 
-			// see https://github.com/jigoshop/jigoshop/blob/1.4.9/shortcodes/pay.php#L55
-			return array(
-				'result' => 'failed',
-			);
-		} else {
-			// We can't redirect directly to the action URL because of Jigoshop wp_safe_redirect() usage.
-			$url = add_query_arg( 'payment_redirect', $payment->get_id(), home_url( '/' ) );
+				// see https://github.com/jigoshop/jigoshop/blob/1.4.9/shortcodes/pay.php#L55
+				return array(
+					'result' => 'failed',
+				);
+			}
 
 			return array(
 				'result'   => 'success',
-				'redirect' => $url,
+				'redirect' => $payment->get_pay_redirect_url(),
 			);
 		}
 	}
