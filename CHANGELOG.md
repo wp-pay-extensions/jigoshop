@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.0.5] - 2017-01-25
+- Added filter for payment source description and URL.
+- Simplified gateway by always redirecting to the pay URL.
+
 ## [1.0.4] - 2016-07-06
 - Use iDEAL payment method when payment method is required, but not set.
 
@@ -22,7 +26,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.4...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.5...HEAD
+[1.0.5]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/wp-pay-extensions/jigoshop/compare/1.0.1...1.0.2
