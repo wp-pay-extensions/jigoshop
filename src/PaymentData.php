@@ -112,6 +112,16 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 		return $this->order->billing_email;
 	}
 
+	public function get_first_name() {
+		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		return $this->order->billing_first_name;
+	}
+
+	public function get_last_name() {
+		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		return $this->order->billing_last_name;
+	}
+
 	public function get_customer_name() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
 		return $this->order->billing_first_name . ' ' . $this->order->billing_last_name;
