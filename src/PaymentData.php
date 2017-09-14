@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.3
+ * @version 1.0.6
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_PaymentData {
@@ -110,6 +110,16 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 	public function get_email() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L71
 		return $this->order->billing_email;
+	}
+
+	public function get_first_name() {
+		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		return $this->order->billing_first_name;
+	}
+
+	public function get_last_name() {
+		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		return $this->order->billing_last_name;
 	}
 
 	public function get_customer_name() {
