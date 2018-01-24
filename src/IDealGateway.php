@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Jigoshop iDEAL gateway
@@ -51,7 +52,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 		$this->method_title   = __( 'Pronamic iDEAL', 'pronamic_ideal' );
 
 		// The icon that Jigoshop will display on the payment methods radio list
-		$this->icon           = plugins_url( 'images/icon-24x24.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->icon           = plugins_url( 'images/icon-24x24.png', Plugin::$file );
 
 		// Let Jigoshop know that this gateway has field
 		// Technically only iDEAL advanced variants has fields
@@ -122,7 +123,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 			'id'      => 'pronamic_pay_ideal_jigoshop_config_id',
 			'std'     => '',
 			'type'    => 'select',
-			'choices' => Pronamic_WP_Pay_Plugin::get_config_select_options(),
+			'choices' => Plugin::get_config_select_options(),
 		);
 
 		return $defaults;
@@ -138,7 +139,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 			echo wpautop( wptexturize( $this->description ) );
 		}
 
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
+		$gateway = Plugin::get_gateway( $this->config_id );
 
 		if ( $gateway ) {
 			if ( $gateway->payment_method_is_required() && null === $gateway->get_payment_method() ) {
@@ -161,17 +162,17 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 		$order->update_status( 'pending', __( 'Pending iDEAL payment.', 'pronamic_ideal' ) );
 
 		// Do specifiek iDEAL variant processing
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->config_id );
+		$gateway = Plugin::get_gateway( $this->config_id );
 
 		if ( $gateway ) {
 			$data = new Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData( $order );
 
-			$payment = Pronamic_WP_Pay_Plugin::start( $this->config_id, $gateway, $data );
+			$payment = Plugin::start( $this->config_id, $gateway, $data );
 
 			$error = $gateway->get_error();
 
 			if ( is_wp_error( $error ) ) {
-				jigoshop::add_error( Pronamic_WP_Pay_Plugin::get_default_error_message() );
+				jigoshop::add_error( Plugin::get_default_error_message() );
 
 				if ( current_user_can( 'administrator' ) ) {
 					foreach ( $error->get_error_codes() as $code ) {
