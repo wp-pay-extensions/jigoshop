@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -143,7 +144,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway extends jigoshop_payment_
 
 		if ( $gateway ) {
 			if ( $gateway->payment_method_is_required() && null === $gateway->get_payment_method() ) {
-				$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+				$gateway->set_payment_method( PaymentMethods::IDEAL );
 			}
 
 			echo $gateway->get_input_html();
