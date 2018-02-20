@@ -1,5 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
+
+use jigoshop_order;
 use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: Jigoshop WordPress pay extension
@@ -7,11 +12,11 @@ use Pronamic\WordPress\Pay\Core\Statuses;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.2
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
+class Extension {
 	/**
 	 * Slug
 	 *
@@ -38,23 +43,29 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 	 * Initialize
 	 */
 	public static function init() {
-		if ( Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::is_active() ) {
-			$slug = self::SLUG;
-
-			add_action( 'pronamic_payment_status_update_' . $slug, array( __CLASS__, 'update_status' ), 10, 2 );
-			add_filter( 'pronamic_payment_source_text_' . $slug,   array( __CLASS__, 'source_text' ), 10, 2 );
-			add_filter( 'pronamic_payment_source_description_' . self::SLUG,   array( __CLASS__, 'source_description' ), 10, 2 );
-			add_filter( 'pronamic_payment_source_url_' . self::SLUG,   array( __CLASS__, 'source_url' ), 10, 2 );
+		if ( ! Jigoshop::is_active() ) {
+			return;
 		}
+
+		$slug = self::SLUG;
+
+		add_action( 'pronamic_payment_status_update_' . $slug, array( __CLASS__, 'update_status' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_text_' . $slug, array( __CLASS__, 'source_text' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( __CLASS__, 'source_description' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( __CLASS__, 'source_url' ), 10, 2 );
 	}
 
 	//////////////////////////////////////////////////
 
 	/**
 	 * Add the gateway to Jigoshop
+	 *
+	 * @param $methods
+	 *
+	 * @return array
 	 */
 	public static function payment_gateways( $methods ) {
-		$methods[] = 'Pronamic_WP_Pay_Extensions_Jigoshop_IDealGateway';
+		$methods[] = 'Pronamic\WordPress\Pay\Extensions\Jigoshop\IDealGateway';
 
 		return $methods;
 	}
@@ -64,19 +75,20 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 	/**
 	 * Update lead status of the specified payment
 	 *
-	 * @param string $payment
+	 * @param Payment $payment
+	 * @param bool    $can_redirect
 	 */
-	public static function update_status( Pronamic_Pay_Payment $payment, $can_redirect = false ) {
+	public static function update_status( Payment $payment, $can_redirect = false ) {
 		$id = $payment->get_source_id();
 
 		$order = new jigoshop_order( (int) $id );
-		$data  = new Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData( $order );
+		$data  = new PaymentData( $order );
 
 		$should_update = ! in_array(
 			$order->status,
 			array(
-				Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::ORDER_STATUS_COMPLETED,
-				Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::ORDER_STATUS_PROCESSING,
+				Jigoshop::ORDER_STATUS_COMPLETED,
+				Jigoshop::ORDER_STATUS_PROCESSING,
 			),
 			true
 		);
@@ -86,7 +98,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 
 			switch ( $payment->status ) {
 				case Statuses::CANCELLED :
-					$order->update_status( Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::ORDER_STATUS_CANCELLED, __( 'iDEAL payment cancelled.', 'pronamic_ideal' ) );
+					$order->update_status( Jigoshop::ORDER_STATUS_CANCELLED, __( 'iDEAL payment cancelled.', 'pronamic_ideal' ) );
 
 					$url = $data->get_cancel_url();
 
@@ -94,7 +106,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 				case Statuses::EXPIRED :
 					// Jigoshop PayPal gateway uses 'on-hold' order status for an 'expired' payment
 					// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L430
-					$order->update_status( Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::ORDER_STATUS_ON_HOLD, __( 'iDEAL payment expired.', 'pronamic_ideal' ) );
+					$order->update_status( Jigoshop::ORDER_STATUS_ON_HOLD, __( 'iDEAL payment expired.', 'pronamic_ideal' ) );
 
 					break;
 				case Statuses::FAILURE :
@@ -132,12 +144,15 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 	//////////////////////////////////////////////////
 
 	/**
-	 * Source column
+	 * Source text.
+	 *
+	 * @param string  $text
+	 * @param Payment $payment
+	 *
+	 * @return string
 	 */
-	public static function source_text( $text, Pronamic_Pay_Payment $payment ) {
-		$text  = '';
-
-		$text .= __( 'Jigoshop', 'pronamic_ideal' ) . '<br />';
+	public static function source_text( $text, Payment $payment ) {
+		$text = __( 'Jigoshop', 'pronamic_ideal' ) . '<br />';
 
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
@@ -150,19 +165,25 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Extension {
 
 	/**
 	 * Source description.
+	 *
+	 * @param string  $description
+	 * @param Payment $payment
+	 *
+	 * @return string
 	 */
-	public static function source_description( $description, Pronamic_Pay_Payment $payment ) {
-		$description = __( 'Jigoshop Order', 'pronamic_ideal' );
-
-		return $description;
+	public static function source_description( $description, Payment $payment ) {
+		return __( 'Jigoshop Order', 'pronamic_ideal' );
 	}
 
 	/**
 	 * Source URL.
+	 *
+	 * @param string  $url
+	 * @param Payment $payment
+	 *
+	 * @return null|string
 	 */
-	public static function source_url( $url, Pronamic_Pay_Payment $payment ) {
-		$url = get_edit_post_link( $payment->get_source_id() );
-
-		return $url;
+	public static function source_url( $url, Payment $payment ) {
+		return get_edit_post_link( $payment->get_source_id() );
 	}
 }

@@ -1,5 +1,9 @@
 <?php
-use Pronamic\WordPress\Pay\Payments\PaymentData;
+
+namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
+
+use jigoshop_order;
+use Pronamic\WordPress\Pay\Payments\PaymentData as Pay_PaymentData;
 use Pronamic\WordPress\Pay\Payments\Item;
 use Pronamic\WordPress\Pay\Payments\Items;
 
@@ -9,11 +13,11 @@ use Pronamic\WordPress\Pay\Payments\Items;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.6
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends PaymentData {
+class PaymentData extends Pay_PaymentData {
 	/**
 	 * Order
 	 *
@@ -103,7 +107,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends PaymentData {
 	public function get_currency_alphabetic_code() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/admin/jigoshop-admin-settings-options.php#L421
 		// @see https://github.com/jigoshop/jigoshop/blob/1.12/jigoshop.php#L1247-L1255
-		return Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::get_option( 'jigoshop_currency' );
+		return Jigoshop::get_option( 'jigoshop_currency' );
 	}
 
 	//////////////////////////////////////////////////
@@ -154,7 +158,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends PaymentData {
 			array(
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
-			) ,
+			),
 			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'view_order' ) )
 		);
@@ -170,7 +174,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends PaymentData {
 			array(
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
-			) ,
+			),
 			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'thanks' ) )
 		);

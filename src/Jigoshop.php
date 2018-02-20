@@ -1,16 +1,20 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
+
+use Jigoshop_Base;
+
 /**
  * Title: Jigoshop
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop {
+class Jigoshop {
 	/**
 	 * Order status pending
 	 *
@@ -81,11 +85,10 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop {
 	 * Jigoshop did some changes on how to retrieve options.
 	 *
 	 * @param string $key
+	 *
 	 * @return boolean|string
 	 */
 	public static function get_option( $key ) {
-		$value = false;
-
 		if ( method_exists( 'Jigoshop_Base', 'get_options' ) ) {
 			$options = Jigoshop_Base::get_options();
 
