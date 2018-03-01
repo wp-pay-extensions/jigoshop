@@ -26,8 +26,6 @@ class IDealGateway extends jigoshop_payment_gateway {
 	 */
 	const ID = 'pronamic_ideal';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an iDEAL gateway
 	 */
@@ -73,8 +71,6 @@ class IDealGateway extends jigoshop_payment_gateway {
 		// Set own variables, load them form the WordPress options
 		$this->config_id = Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_config_id' );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get default options
@@ -136,8 +132,6 @@ class IDealGateway extends jigoshop_payment_gateway {
 		return $defaults;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Payment fields
 	 */
@@ -158,8 +152,6 @@ class IDealGateway extends jigoshop_payment_gateway {
 
 		echo $gateway->get_input_html(); // WPCS: xss ok.
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Process the payment and return the result

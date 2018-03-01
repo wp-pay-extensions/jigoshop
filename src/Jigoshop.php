@@ -63,8 +63,6 @@ class Jigoshop {
 	 */
 	const ORDER_STATUS_CANCELLED = 'cancelled';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Check if Jigoshop is active (Automattic/developer style)
 	 *
@@ -76,8 +74,6 @@ class Jigoshop {
 	public static function is_active() {
 		return defined( 'JIGOSHOP_VERSION' );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get Jigoshop option

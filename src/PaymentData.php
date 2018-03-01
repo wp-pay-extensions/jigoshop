@@ -26,8 +26,6 @@ class PaymentData extends Pay_PaymentData {
 	 */
 	private $order;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Construct and intializes an Jigoshop iDEAL data proxy
 	 *
@@ -39,8 +37,6 @@ class PaymentData extends Pay_PaymentData {
 		$this->order = $order;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get source indicatir
 	 *
@@ -50,8 +46,6 @@ class PaymentData extends Pay_PaymentData {
 	public function get_source() {
 		return 'jigoshop';
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get description
@@ -100,19 +94,11 @@ class PaymentData extends Pay_PaymentData {
 		return $items;
 	}
 
-	//////////////////////////////////////////////////
-	// Currency
-	//////////////////////////////////////////////////
-
 	public function get_currency_alphabetic_code() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/admin/jigoshop-admin-settings-options.php#L421
 		// @see https://github.com/jigoshop/jigoshop/blob/1.12/jigoshop.php#L1247-L1255
 		return Jigoshop::get_option( 'jigoshop_currency' );
 	}
-
-	//////////////////////////////////////////////////
-	// Customer
-	//////////////////////////////////////////////////
 
 	public function get_email() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L71
@@ -148,10 +134,6 @@ class PaymentData extends Pay_PaymentData {
 		// http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L68
 		return $this->order->billing_postcode;
 	}
-
-	//////////////////////////////////////////////////
-	// URL's
-	//////////////////////////////////////////////////
 
 	public function get_normal_return_url() {
 		return add_query_arg(

@@ -24,8 +24,6 @@ class Extension {
 	 */
 	const SLUG = 'jigoshop';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Bootstrap
 	 */
@@ -36,8 +34,6 @@ class Extension {
 		// @see https://github.com/jigoshop/jigoshop/blob/1.8/gateways/gateways.class.php#L34
 		add_filter( 'jigoshop_payment_gateways', array( __CLASS__, 'payment_gateways' ) );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Initialize
@@ -55,8 +51,6 @@ class Extension {
 		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( __CLASS__, 'source_url' ), 10, 2 );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Add the gateway to Jigoshop
 	 *
@@ -69,8 +63,6 @@ class Extension {
 
 		return $methods;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Update lead status of the specified payment
@@ -140,8 +132,6 @@ class Extension {
 			}
 		}
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Source text.
