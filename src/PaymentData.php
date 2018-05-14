@@ -1,16 +1,23 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
+
+use jigoshop_order;
+use Pronamic\WordPress\Pay\Payments\PaymentData as Pay_PaymentData;
+use Pronamic\WordPress\Pay\Payments\Item;
+use Pronamic\WordPress\Pay\Payments\Items;
+
 /**
  * Title: Jigoshop iDEAL payment data
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.6
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_PaymentData {
+class PaymentData extends Pay_PaymentData {
 	/**
 	 * Order
 	 *
@@ -18,8 +25,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 	 * @var jigoshop_order
 	 */
 	private $order;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Construct and intializes an Jigoshop iDEAL data proxy
@@ -32,8 +37,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 		$this->order = $order;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get source indicatir
 	 *
@@ -43,8 +46,6 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 	public function get_source() {
 		return 'jigoshop';
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get description
@@ -72,15 +73,15 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 	 * Get items
 	 *
 	 * @see Pronamic_Pay_PaymentDataInterface::get_items()
-	 * @return Pronamic_IDeal_Items
+	 * @return Items
 	 */
 	public function get_items() {
 		// Items
-		$items = new Pronamic_IDeal_Items();
+		$items = new Items();
 
 		// Item
 		// We only add one total item, because iDEAL cant work with negative price items (discount)
-		$item = new Pronamic_IDeal_Item();
+		$item = new Item();
 		$item->setNumber( $this->order->id );
 		$item->setDescription( sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id ) );
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L98
@@ -93,19 +94,11 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 		return $items;
 	}
 
-	//////////////////////////////////////////////////
-	// Currency
-	//////////////////////////////////////////////////
-
 	public function get_currency_alphabetic_code() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/admin/jigoshop-admin-settings-options.php#L421
 		// @see https://github.com/jigoshop/jigoshop/blob/1.12/jigoshop.php#L1247-L1255
-		return Pronamic_WP_Pay_Extensions_Jigoshop_Jigoshop::get_option( 'jigoshop_currency' );
+		return Jigoshop::get_option( 'jigoshop_currency' );
 	}
-
-	//////////////////////////////////////////////////
-	// Customer
-	//////////////////////////////////////////////////
 
 	public function get_email() {
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L71
@@ -142,16 +135,12 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 		return $this->order->billing_postcode;
 	}
 
-	//////////////////////////////////////////////////
-	// URL's
-	//////////////////////////////////////////////////
-
 	public function get_normal_return_url() {
 		return add_query_arg(
 			array(
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
-			) ,
+			),
 			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'view_order' ) )
 		);
@@ -167,7 +156,7 @@ class Pronamic_WP_Pay_Extensions_Jigoshop_PaymentData extends Pronamic_WP_Pay_Pa
 			array(
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
-			) ,
+			),
 			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'thanks' ) )
 		);
