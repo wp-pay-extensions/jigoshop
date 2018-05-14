@@ -15,7 +15,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.0.4
+ * @version 2.0.0
  * @since   1.0.0
  */
 class IDealGateway extends jigoshop_payment_gateway {
