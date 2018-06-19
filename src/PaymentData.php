@@ -82,12 +82,12 @@ class PaymentData extends Pay_PaymentData {
 		// Item
 		// We only add one total item, because iDEAL cant work with negative price items (discount)
 		$item = new Item();
-		$item->setNumber( $this->order->id );
-		$item->setDescription( sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id ) );
+		$item->set_number( $this->order->id );
+		$item->set_description( sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id ) );
 		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L98
 		// @see https://github.com/jigoshop/jigoshop/blob/dev/classes/jigoshop_order.class.php#L124
-		$item->setPrice( $this->order->order_total );
-		$item->setQuantity( 1 );
+		$item->set_price( $this->order->order_total );
+		$item->set_quantity( 1 );
 
 		$items->addItem( $item );
 
