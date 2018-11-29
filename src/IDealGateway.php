@@ -54,7 +54,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 		$this->id = self::ID;
 
 		// The method title that Jigoshop will display in the admin
-		$this->method_title = __( 'Pronamic iDEAL', 'pronamic_ideal' );
+		$this->method_title = __( 'Pronamic - iDEAL', 'pronamic_ideal' );
 
 		// The icon that Jigoshop will display on the payment methods radio list
 		$this->icon = plugins_url( 'images/ideal/icon-24x24.png', Plugin::$file );
@@ -82,7 +82,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 
 		// Section
 		$defaults[] = array(
-			'name' => __( 'Pronamic iDEAL', 'pronamic_ideal' ),
+			'name' => __( 'Pronamic Pay', 'pronamic_ideal' ),
 			'type' => 'title',
 			'desc' => __( 'Allow iDEAL payments.', 'pronamic_ideal' ),
 		);
