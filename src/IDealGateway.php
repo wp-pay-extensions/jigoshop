@@ -32,19 +32,19 @@ class IDealGateway extends jigoshop_payment_gateway {
 	public function __construct() {
 		/*
 		 * Parent constructor only exists in Jigoshop 1.3+:
-		 * @see https://github.com/jigoshop/jigoshop/blob/1.2/gateways/gateway.class.php
-		 * @see https://github.com/jigoshop/jigoshop/blob/1.3/gateways/gateway.class.php
+		 * @link https://github.com/jigoshop/jigoshop/blob/1.2/gateways/gateway.class.php
+		 * @link https://github.com/jigoshop/jigoshop/blob/1.3/gateways/gateway.class.php
 		 *
 		 * The 'jigoshop::jigoshop_version()' function doesn't exists in version < 1.3.
-		 * @see https://github.com/jigoshop/jigoshop/blob/dev/classes/jigoshop.class.php#L54
+		 * @link https://github.com/jigoshop/jigoshop/blob/dev/classes/jigoshop.class.php#L54
 		 *
 		 * Use of Jigoshop version constant:
-		 * 1.0 = 1202010 - @see https://github.com/jigoshop/jigoshop/blob/1.0/jigoshop.php#L28
-		 * 1.1 = 1202130 - @see https://github.com/jigoshop/jigoshop/blob/1.1/jigoshop.php#L28
-		 * 1.2 = 1203310 - @see https://github.com/jigoshop/jigoshop/blob/1.2/jigoshop.php#L45
-		 * 1.3 = 1207160 - @see https://github.com/jigoshop/jigoshop/blob/1.3/jigoshop.php#L45
-		 * 1.9.5 = 1307110 - @see https://github.com/jigoshop/jigoshop/blob/1.9.5/jigoshop.php#L45
-		 * 1.9.6 = 1.9.6 - @see https://github.com/jigoshop/jigoshop/blob/1.9.6/jigoshop.php#L45-L47
+		 * 1.0 = 1202010 - @link https://github.com/jigoshop/jigoshop/blob/1.0/jigoshop.php#L28
+		 * 1.1 = 1202130 - @link https://github.com/jigoshop/jigoshop/blob/1.1/jigoshop.php#L28
+		 * 1.2 = 1203310 - @link https://github.com/jigoshop/jigoshop/blob/1.2/jigoshop.php#L45
+		 * 1.3 = 1207160 - @link https://github.com/jigoshop/jigoshop/blob/1.3/jigoshop.php#L45
+		 * 1.9.5 = 1307110 - @link https://github.com/jigoshop/jigoshop/blob/1.9.5/jigoshop.php#L45
+		 * 1.9.6 = 1.9.6 - @link https://github.com/jigoshop/jigoshop/blob/1.9.6/jigoshop.php#L45-L47
 		 */
 		if ( version_compare( JIGOSHOP_VERSION, 1207160, '>=' ) || version_compare( JIGOSHOP_VERSION, '1.3', '>=' ) ) {
 			parent::__construct();
@@ -54,7 +54,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 		$this->id = self::ID;
 
 		// The method title that Jigoshop will display in the admin
-		$this->method_title = __( 'Pronamic iDEAL', 'pronamic_ideal' );
+		$this->method_title = __( 'Pronamic - iDEAL', 'pronamic_ideal' );
 
 		// The icon that Jigoshop will display on the payment methods radio list
 		$this->icon = plugins_url( 'images/ideal/icon-24x24.png', Plugin::$file );
@@ -82,7 +82,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 
 		// Section
 		$defaults[] = array(
-			'name' => __( 'Pronamic iDEAL', 'pronamic_ideal' ),
+			'name' => __( 'Pronamic Pay', 'pronamic_ideal' ),
 			'type' => 'title',
 			'desc' => __( 'Allow iDEAL payments.', 'pronamic_ideal' ),
 		);

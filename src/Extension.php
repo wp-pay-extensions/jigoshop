@@ -31,7 +31,7 @@ class Extension {
 		add_action( 'init', array( __CLASS__, 'init' ) );
 
 		// Gateways need to add themselves to this filter -prior- to the 'init' action hook
-		// @see https://github.com/jigoshop/jigoshop/blob/1.8/gateways/gateways.class.php#L34
+		// @link https://github.com/jigoshop/jigoshop/blob/1.8/gateways/gateways.class.php#L34
 		add_filter( 'jigoshop_payment_gateways', array( __CLASS__, 'payment_gateways' ) );
 	}
 
@@ -97,13 +97,13 @@ class Extension {
 					break;
 				case Statuses::EXPIRED :
 					// Jigoshop PayPal gateway uses 'on-hold' order status for an 'expired' payment
-					// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L430
+					// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L430
 					$order->update_status( Jigoshop::ORDER_STATUS_ON_HOLD, __( 'iDEAL payment expired.', 'pronamic_ideal' ) );
 
 					break;
 				case Statuses::FAILURE :
 					// Jigoshop PayPal gateway uses 'on-hold' order status for an 'failure' in the payment
-					// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L431
+					// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L431
 					$order->update_status( 'failed', __( 'iDEAL payment failed.', 'pronamic_ideal' ) );
 
 					break;

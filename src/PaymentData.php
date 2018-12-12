@@ -14,7 +14,7 @@ use Pronamic\WordPress\Pay\Payments\Items;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.1
  * @since   1.0.0
  */
 class PaymentData extends Pay_PaymentData {
@@ -54,7 +54,7 @@ class PaymentData extends Pay_PaymentData {
 	 * @return string
 	 */
 	public function get_description() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L50
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L50
 		return sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id );
 	}
 
@@ -65,7 +65,7 @@ class PaymentData extends Pay_PaymentData {
 	 * @return string
 	 */
 	public function get_order_id() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L50
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L50
 		return $this->order->id;
 	}
 
@@ -82,12 +82,12 @@ class PaymentData extends Pay_PaymentData {
 		// Item
 		// We only add one total item, because iDEAL cant work with negative price items (discount)
 		$item = new Item();
-		$item->setNumber( $this->order->id );
-		$item->setDescription( sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id ) );
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L98
-		// @see https://github.com/jigoshop/jigoshop/blob/dev/classes/jigoshop_order.class.php#L124
-		$item->setPrice( $this->order->order_total );
-		$item->setQuantity( 1 );
+		$item->set_number( $this->order->id );
+		$item->set_description( sprintf( __( 'Order %s', 'pronamic_ideal' ), $this->order->id ) );
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L98
+		// @link https://github.com/jigoshop/jigoshop/blob/dev/classes/jigoshop_order.class.php#L124
+		$item->set_price( $this->order->order_total );
+		$item->set_quantity( 1 );
 
 		$items->addItem( $item );
 
@@ -95,43 +95,43 @@ class PaymentData extends Pay_PaymentData {
 	}
 
 	public function get_currency_alphabetic_code() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/admin/jigoshop-admin-settings-options.php#L421
-		// @see https://github.com/jigoshop/jigoshop/blob/1.12/jigoshop.php#L1247-L1255
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/admin/jigoshop-admin-settings-options.php#L421
+		// @link https://github.com/jigoshop/jigoshop/blob/1.12/jigoshop.php#L1247-L1255
 		return Jigoshop::get_option( 'jigoshop_currency' );
 	}
 
 	public function get_email() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L71
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L71
 		return $this->order->billing_email;
 	}
 
 	public function get_first_name() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
 		return $this->order->billing_first_name;
 	}
 
 	public function get_last_name() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
 		return $this->order->billing_last_name;
 	}
 
 	public function get_customer_name() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L62
 		return $this->order->billing_first_name . ' ' . $this->order->billing_last_name;
 	}
 
 	public function get_address() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L65
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L65
 		return $this->order->billing_address_1;
 	}
 
 	public function get_city() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L67
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L67
 		return $this->order->billing_city;
 	}
 
 	public function get_zip() {
-		// http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L68
+		// https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L68
 		return $this->order->billing_postcode;
 	}
 
@@ -141,13 +141,13 @@ class PaymentData extends Pay_PaymentData {
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
 			),
-			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
+			// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'view_order' ) )
 		);
 	}
 
 	public function get_cancel_url() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L320
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L320
 		return $this->order->get_cancel_order_url();
 	}
 
@@ -157,13 +157,13 @@ class PaymentData extends Pay_PaymentData {
 				'key'   => $this->order->order_key,
 				'order' => $this->order->id,
 			),
-			// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
+			// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/jigoshop.php#L442
 			get_permalink( jigoshop_get_page_id( 'thanks' ) )
 		);
 	}
 
 	public function get_error_url() {
-		// @see http://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L309
+		// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.1.1/classes/jigoshop_order.class.php#L309
 		return $this->order->get_checkout_payment_url();
 	}
 }
