@@ -80,7 +80,7 @@ class Jigoshop {
 	 *
 	 * Jigoshop did some changes on how to retrieve options.
 	 *
-	 * @param string $key
+	 * @param string $key Option key.
 	 *
 	 * @return boolean|string
 	 */

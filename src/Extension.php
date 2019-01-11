@@ -30,8 +30,11 @@ class Extension {
 	public static function bootstrap() {
 		add_action( 'init', array( __CLASS__, 'init' ) );
 
-		// Gateways need to add themselves to this filter -prior- to the 'init' action hook
-		// @link https://github.com/jigoshop/jigoshop/blob/1.8/gateways/gateways.class.php#L34
+		/*
+		 * Gateways need to add themselves to this filter -prior- to the 'init' action hook.
+		 *
+		 * @link https://github.com/jigoshop/jigoshop/blob/1.8/gateways/gateways.class.php#L34
+		 */
 		add_filter( 'jigoshop_payment_gateways', array( __CLASS__, 'payment_gateways' ) );
 	}
 
@@ -54,7 +57,7 @@ class Extension {
 	/**
 	 * Add the gateway to Jigoshop
 	 *
-	 * @param $methods
+	 * @param array $methods Payment gateways.
 	 *
 	 * @return array
 	 */
@@ -67,8 +70,8 @@ class Extension {
 	/**
 	 * Update lead status of the specified payment
 	 *
-	 * @param Payment $payment
-	 * @param bool    $can_redirect
+	 * @param Payment $payment      Payment.
+	 * @param bool    $can_redirect Can redirect.
 	 */
 	public static function update_status( Payment $payment, $can_redirect = false ) {
 		$id = $payment->get_source_id();
@@ -89,33 +92,39 @@ class Extension {
 			$url = $data->get_normal_return_url();
 
 			switch ( $payment->status ) {
-				case Statuses::CANCELLED :
+				case Statuses::CANCELLED:
 					$order->update_status( Jigoshop::ORDER_STATUS_CANCELLED, __( 'iDEAL payment cancelled.', 'pronamic_ideal' ) );
 
 					$url = $data->get_cancel_url();
 
 					break;
-				case Statuses::EXPIRED :
-					// Jigoshop PayPal gateway uses 'on-hold' order status for an 'expired' payment
-					// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L430
+				case Statuses::EXPIRED:
+					/*
+					 * Jigoshop PayPal gateway uses 'on-hold' order status for an 'expired' payment.
+					 *
+					 * @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L430
+					 */
 					$order->update_status( Jigoshop::ORDER_STATUS_ON_HOLD, __( 'iDEAL payment expired.', 'pronamic_ideal' ) );
 
 					break;
-				case Statuses::FAILURE :
-					// Jigoshop PayPal gateway uses 'on-hold' order status for an 'failure' in the payment
-					// @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L431
+				case Statuses::FAILURE:
+					/*
+					 * Jigoshop PayPal gateway uses 'on-hold' order status for an 'failure' in the payment.
+					 *
+					 * @link https://plugins.trac.wordpress.org/browser/jigoshop/tags/1.2.1/gateways/paypal.php#L431
+					 */
 					$order->update_status( 'failed', __( 'iDEAL payment failed.', 'pronamic_ideal' ) );
 
 					break;
-				case Statuses::SUCCESS :
-					// Payment completed
+				case Statuses::SUCCESS:
+					// Payment completed.
 					$order->add_order_note( __( 'iDEAL payment completed.', 'pronamic_ideal' ) );
 					$order->payment_complete();
 
 					$url = $data->get_success_url();
 
 					break;
-				case Statuses::OPEN :
+				case Statuses::OPEN:
 					$order->add_order_note( __( 'iDEAL payment open.', 'pronamic_ideal' ) );
 
 					break;
@@ -136,8 +145,8 @@ class Extension {
 	/**
 	 * Source text.
 	 *
-	 * @param string  $text
-	 * @param Payment $payment
+	 * @param string  $text    Source text.
+	 * @param Payment $payment Payment.
 	 *
 	 * @return string
 	 */
@@ -147,7 +156,11 @@ class Extension {
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
 			get_edit_post_link( $payment->get_source_id() ),
-			sprintf( __( 'Order #%s', 'pronamic_ideal' ), $payment->get_source_id() )
+			sprintf(
+				/* translators: %s: payment source id */
+				__( 'Order #%s', 'pronamic_ideal' ),
+				$payment->get_source_id()
+			)
 		);
 
 		return $text;
@@ -156,8 +169,8 @@ class Extension {
 	/**
 	 * Source description.
 	 *
-	 * @param string  $description
-	 * @param Payment $payment
+	 * @param string  $description Source description.
+	 * @param Payment $payment     Payment.
 	 *
 	 * @return string
 	 */
@@ -168,8 +181,8 @@ class Extension {
 	/**
 	 * Source URL.
 	 *
-	 * @param string  $url
-	 * @param Payment $payment
+	 * @param string  $url     Source URL.
+	 * @param Payment $payment Payment.
 	 *
 	 * @return null|string
 	 */

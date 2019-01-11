@@ -50,25 +50,25 @@ class IDealGateway extends jigoshop_payment_gateway {
 			parent::__construct();
 		}
 
-		// Give this gateway an unique ID so Jigoshop can identiy this gateway
+		// Give this gateway an unique ID so Jigoshop can identiy this gateway.
 		$this->id = self::ID;
 
-		// The method title that Jigoshop will display in the admin
+		// The method title that Jigoshop will display in the admin.
 		$this->method_title = __( 'Pronamic - iDEAL', 'pronamic_ideal' );
 
-		// The icon that Jigoshop will display on the payment methods radio list
+		// The icon that Jigoshop will display on the payment methods radio list.
 		$this->icon = plugins_url( 'images/ideal/icon-24x24.png', Plugin::$file );
 
-		// Let Jigoshop know that this gateway has field
-		// Technically only iDEAL advanced variants has fields
+		// Let Jigoshop know that this gateway has field.
+		// Technically only iDEAL advanced variants has fields.
 		$this->has_fields = true;
 
-		// Set default Jigoshop variables, load them form the WordPress options
+		// Set default Jigoshop variables, load them form the WordPress options.
 		$this->enabled     = Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_enabled' );
 		$this->title       = Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_title' );
 		$this->description = Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_description' );
 
-		// Set own variables, load them form the WordPress options
+		// Set own variables, load them form the WordPress options.
 		$this->config_id = Jigoshop::get_option( 'pronamic_pay_ideal_jigoshop_config_id' );
 	}
 
@@ -80,14 +80,14 @@ class IDealGateway extends jigoshop_payment_gateway {
 	protected function get_default_options() {
 		$defaults = array();
 
-		// Section
+		// Section.
 		$defaults[] = array(
 			'name' => __( 'Pronamic Pay', 'pronamic_ideal' ),
 			'type' => 'title',
 			'desc' => __( 'Allow iDEAL payments.', 'pronamic_ideal' ),
 		);
 
-		// Options
+		// Options.
 		$defaults[] = array(
 			'name'    => __( 'Enable iDEAL', 'pronamic_ideal' ),
 			'desc'    => '',
@@ -156,17 +156,17 @@ class IDealGateway extends jigoshop_payment_gateway {
 	/**
 	 * Process the payment and return the result
 	 *
-	 * @param $order_id
+	 * @param int $order_id Order ID.
 	 *
 	 * @return array
 	 */
 	public function process_payment( $order_id ) {
 		$order = new jigoshop_order( $order_id );
 
-		// Mark as on-hold (we're awaiting the payment)
+		// Mark as on-hold (we're awaiting the payment).
 		$order->update_status( 'pending', __( 'Pending iDEAL payment.', 'pronamic_ideal' ) );
 
-		// Do specifiek iDEAL variant processing
+		// Do specific iDEAL variant processing.
 		$gateway = Plugin::get_gateway( $this->config_id );
 
 		if ( ! $gateway ) {
@@ -190,7 +190,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 				}
 			}
 
-			// see https://github.com/jigoshop/jigoshop/blob/1.4.9/shortcodes/pay.php#L55
+			// @link https://github.com/jigoshop/jigoshop/blob/1.4.9/shortcodes/pay.php#L55
 			return array(
 				'result' => 'failed',
 			);
