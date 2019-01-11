@@ -33,12 +33,36 @@
 			"php": "5.3.3"
 		}
 	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "jigoshop/jigoshop",
+				"version": "1.18.3",
+				"dist": {
+					"url": "https://github.com/jigoshop/jigoshop/archive/1.18.3.zip",
+					"type": "zip"
+				},
+				"source": {
+					"url": "https://github.com/jigoshop/jigoshop",
+					"type": "github",
+					"reference": "tags/1.18.3"
+				},
+				"autoload": {
+					"classmap": [
+						"."
+					]
+				}
+			}
+		}
+	],
 	"require": {
 		"php": "^5.3",
 		"wp-pay/core": "^2.0"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+		"jigoshop/jigoshop": "1.18.3",
 		"php-coveralls/php-coveralls": "^1.0",
 		"phpcompatibility/php-compatibility": "^9.0",
 		"phpcompatibility/phpcompatibility-wp": "^2.0",
