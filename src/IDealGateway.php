@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
 
-use jigoshop;
+use jigoshop as JigoshopPlugin;
 use jigoshop_order;
 use jigoshop_payment_gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
@@ -170,7 +170,7 @@ class IDealGateway extends jigoshop_payment_gateway {
 		$gateway = Plugin::get_gateway( $this->config_id );
 
 		if ( ! $gateway ) {
-			jigoshop::add_error( Plugin::get_default_error_message() );
+			JigoshopPlugin::add_error( Plugin::get_default_error_message() );
 
 			return;
 		}
@@ -182,11 +182,11 @@ class IDealGateway extends jigoshop_payment_gateway {
 		$error = $gateway->get_error();
 
 		if ( is_wp_error( $error ) ) {
-			jigoshop::add_error( Plugin::get_default_error_message() );
+			JigoshopPlugin::add_error( Plugin::get_default_error_message() );
 
 			if ( current_user_can( 'administrator' ) ) {
 				foreach ( $error->get_error_codes() as $code ) {
-					jigoshop::add_error( $error->get_error_message( $code ) );
+					JigoshopPlugin::add_error( $error->get_error_message( $code ) );
 				}
 			}
 
