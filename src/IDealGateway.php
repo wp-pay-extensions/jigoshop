@@ -150,7 +150,8 @@ class IDealGateway extends jigoshop_payment_gateway {
 			$gateway->set_payment_method( PaymentMethods::IDEAL );
 		}
 
-		echo $gateway->get_input_html(); // WPCS: xss ok.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $gateway->get_input_html();
 	}
 
 	/**
