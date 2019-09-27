@@ -3,7 +3,7 @@
 namespace Pronamic\WordPress\Pay\Extensions\Jigoshop;
 
 use jigoshop_order;
-use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -92,13 +92,13 @@ class Extension {
 			$url = $data->get_normal_return_url();
 
 			switch ( $payment->status ) {
-				case Statuses::CANCELLED:
+				case PaymentStatus::CANCELLED:
 					$order->update_status( Jigoshop::ORDER_STATUS_CANCELLED, __( 'iDEAL payment cancelled.', 'pronamic_ideal' ) );
 
 					$url = $data->get_cancel_url();
 
 					break;
-				case Statuses::EXPIRED:
+				case PaymentStatus::EXPIRED:
 					/*
 					 * Jigoshop PayPal gateway uses 'on-hold' order status for an 'expired' payment.
 					 *
@@ -107,7 +107,7 @@ class Extension {
 					$order->update_status( Jigoshop::ORDER_STATUS_ON_HOLD, __( 'iDEAL payment expired.', 'pronamic_ideal' ) );
 
 					break;
-				case Statuses::FAILURE:
+				case PaymentStatus::FAILURE:
 					/*
 					 * Jigoshop PayPal gateway uses 'on-hold' order status for an 'failure' in the payment.
 					 *
@@ -116,7 +116,7 @@ class Extension {
 					$order->update_status( 'failed', __( 'iDEAL payment failed.', 'pronamic_ideal' ) );
 
 					break;
-				case Statuses::SUCCESS:
+				case PaymentStatus::SUCCESS:
 					// Payment completed.
 					$order->add_order_note( __( 'iDEAL payment completed.', 'pronamic_ideal' ) );
 					$order->payment_complete();
@@ -124,7 +124,7 @@ class Extension {
 					$url = $data->get_success_url();
 
 					break;
-				case Statuses::OPEN:
+				case PaymentStatus::OPEN:
 					$order->add_order_note( __( 'iDEAL payment open.', 'pronamic_ideal' ) );
 
 					break;
