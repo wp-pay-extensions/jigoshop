@@ -178,17 +178,13 @@ class IDealGateway extends jigoshop_payment_gateway {
 
 		$data = new PaymentData( $order );
 
-		$payment = Plugin::start( $this->config_id, $gateway, $data );
-
-		$error = $gateway->get_error();
-
-		if ( is_wp_error( $error ) ) {
+		try {
+			$payment = Plugin::start( $this->config_id, $gateway, $data );
+		} catch ( \Pronamic\WordPress\Pay\PayException $e ) {
 			JigoshopPlugin::add_error( Plugin::get_default_error_message() );
 
 			if ( current_user_can( 'administrator' ) ) {
-				foreach ( $error->get_error_codes() as $code ) {
-					JigoshopPlugin::add_error( $error->get_error_message( $code ) );
-				}
+				JigoshopPlugin::add_error( $e->get_message() );
 			}
 
 			// @link https://github.com/jigoshop/jigoshop/blob/1.4.9/shortcodes/pay.php#L55
