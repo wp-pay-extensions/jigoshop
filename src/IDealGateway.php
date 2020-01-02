@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Plugin;
 /**
  * Title: Jigoshop iDEAL gateway
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma

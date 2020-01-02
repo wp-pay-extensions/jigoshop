@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\Items;
 /**
  * Title: Jigoshop iDEAL payment data
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
