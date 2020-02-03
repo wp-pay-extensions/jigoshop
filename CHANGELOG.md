@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.5] - 2020-02-03
+- Marked library as deprecated.
+
 ## [2.0.4] - 2019-12-22
 - Improved error handling with exceptions.
 - Updated usage of deprecated `addItem()` method.
@@ -46,7 +49,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.4...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.5...HEAD
+[2.0.5]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/wp-pay-extensions/jigoshop/compare/2.0.1...2.0.2

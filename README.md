@@ -1,4 +1,4 @@
-# WordPress Pay Extension: Jigoshop
+# [DEPRECATED] WordPress Pay Extension: Jigoshop
 
 **Jigoshop driver for the WordPress payment processing library.**
 
